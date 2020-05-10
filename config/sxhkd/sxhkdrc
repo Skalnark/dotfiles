@@ -123,6 +123,10 @@ super + {Left,Down,Up,Right}
 # Print screen
 # Without the sleep scrot crashes with:
 # giblib error: couldn't grab keyboard:Resource temporarily unavailable
+shift + Print
+    scrot $HOME/'Pictures/Screenshots/%Y-%m-%d_%H%M%S-$wx$h_scrot.png'; \
+    xfe $HOME/'Pictures/Screenshots/'
+
 control + Print
     sleep 0.2; \
     scrot -s $HOME/'Pictures/Screenshots/%Y-%m-%d_%H%M%S-$wx$h_scrot.png'

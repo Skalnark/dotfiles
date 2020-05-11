@@ -102,8 +102,9 @@ type = internal/fs
 interval = 25
 
 mount-0 = /
+mount-1 = /home
 
-label-mounted = %{F#0a81f5}%mountpoint%%{F-}: %percentage_used%%
+label-mounted = disk( %mountpoint% ):%{F#0a81f5}%{F-}: %percentage_used%%
 label-unmounted = %mountpoint% not mounted
 label-unmounted-foreground = ${colors.foreground-alt}
 
@@ -225,11 +226,11 @@ interval = 3.0
 
 format-connected = <ramp-signal> <label-connected>
 format-connected-underline = #9f78e1
-label-connected = %essid%
+label-connected = %wlan%
 
-format-disconnected = wlan
+format-disconnected = 
 ;format-disconnected = <label-disconnected>
-format-disconnected-underline = $ff0000
+;format-disconnected-underline = $ff0000
 ;label-disconnected = %ifname% disconnected
 ;label-disconnected-foreground = ${colors.foreground-alt}
 
@@ -248,10 +249,10 @@ interval = 3.0
 format-connected-underline = #55aa55
 format-connected-prefix = " "
 format-connected-prefix-foreground = ${colors.foreground-alt}
-label-connected = connected
+label-connected = eth
 
-format-disconnected = disconnected
-format-disconnected-underline = #ff0000
+format-disconnected = 
+;format-disconnected-underline = #ff0000
 ;label-disconnected = %ifname% disconnected
 ;label-disconnected-foreground = ${colors.foreground-alt}
 

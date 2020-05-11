@@ -137,3 +137,20 @@ Print
 # File Manager
 ctrl + alt + f
     xfe $HOME
+
+# Microphone Volume
+super + ctrl + Up
+    amixer set Capture 1%+
+
+super + ctrl + Down
+    amixer set Capture 1%-
+
+super + ctrl + v
+    amixer set Capture 10%
+
+# Volume
+super + alt + Up
+    amixer set Master 1%+
+
+super + alt + Down
+    amixer set Master 1%-

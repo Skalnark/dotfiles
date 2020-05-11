@@ -5,6 +5,7 @@
   - wmname
 - [sxhkd](https://wiki.archlinux.org/index.php/Sxhkd)
   - [xfe](https://aur.archlinux.org/packages/xfe)
+  - alsa-utils
 - [picom](https://wiki.archlinux.org/index.php/Picom)
 - [cyberpunk-neon](https://github.com/Roboron3042/Cyberpunk-Neon)
 - [polybar](https://github.com/polybar/polybar)

@@ -4,7 +4,7 @@
 
 # terminal emulator
 super + Return
-	termite
+	kitty
 
 # program launcher
 super + @space
@@ -23,9 +23,12 @@ super + alt + {q,r}
 	bspc {quit,wm -r}
 
 # close and kill
-super + {_,shift + }w
-	bspc node -{c,k}
-
+#super + {_,shift + }w
+#	bspc node -{c,k}
+super + shift + k
+        bspc node -k
+super + shift + c
+        bspc node -c
 # alternate between the tiled and monocle layout
 super + m
 	bspc desktop -l next
@@ -55,8 +58,8 @@ super + ctrl + {m,x,y,z}
 #
 
 # focus the node in the given direction
-super + {_,shift + }{h,j,k,l}
-	bspc node -{f,s} {west,south,north,east}
+#super + {_,shift + }{h,j,k,l}
+#	bspc node -{f,s} {west,south,north,east}
 
 # focus the node for the given path jump
 super + {p,b,comma,period}
@@ -146,7 +149,7 @@ super + ctrl + Down
     amixer set Capture 1%-
 
 super + ctrl + v
-    amixer set Capture 10%
+    amixer set Capture 20%
 
 # Volume
 super + alt + Up

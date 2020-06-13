@@ -7,7 +7,7 @@ super + Return
 	kitty
 
 super + alt + Return
-        bspc rule -a \* -o state=floating rectangle=800x600+0+0 center=true && kitty
+        bspc rule -a \* -o state=floating rectangle=700x350+0+0 center=true && kitty
 
 # program launcher
 super + @space
@@ -131,7 +131,7 @@ super + shift + {Left,Down,Up,Right}
 # giblib error: couldn't grab keyboard:Resource temporarily unavailable
 shift + Print
     scrot $HOME/'Pictures/Screenshots/%Y-%m-%d_%H%M%S-$wx$h_scrot.png'; \
-    ranger $HOME/'Pictures/Screenshots/'
+    kitty ranger $HOME/'Pictures/Screenshots/'
 
 control + Print
     sleep 0.2; \
@@ -142,7 +142,7 @@ Print
 
 # File Manager
 ctrl + alt + f
-    xfe $HOME
+    kitty ranger $HOME
 
 # Microphone Volume
 ctrl + shift + Up

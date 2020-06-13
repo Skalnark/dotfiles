@@ -29,9 +29,11 @@ alert = #ff0000
 
 active-desktop = #ff00ff33
 occupied-foreground = #ffffff
-occupied-background = #550000aa
-focused-background = #6600fbff
-focused-foreground = #ff7a000e
+occupied-background = #77990500
+focused-background = #6600ffe5
+focused-foreground = #000099
+
+
 [bar/bar1]
 ;monitor = ${env:MONITOR:HDMI-1}
 width = 100%
@@ -50,15 +52,15 @@ line-color = #f00
 border-size = 4
 border-color = #00000000
 
-padding-left = 0
-padding-right = 2
+padding-left = 6
+padding-right = 6
 
-module-margin-left = 1
-module-margin-right = 2
+module-margin-left = 6
+module-margin-right = 6
 
-font-0 = FiraCode:pixelsize=10:bold;1
-font-1 = FiraCode:fontformat=truetype:size=12:antialias=false;0
-font-2 = FiraCode:pixelsize=12;1
+font-0 = Exo2:pixelsize=12;style:bold;3
+font-1 = Iosevka Nerd Font:pixelsize=13;3
+font-2 = Iosevka Nerd Font:pixelsize=13;3
 
 modules-left = bspwm pomo
 modules-center = mpd date
@@ -90,12 +92,12 @@ label = %title:0:30:...%
 type = internal/xkeyboard
 blacklist-0 = num lock
 
-format-prefix = " "
+format-prefix = "      "
 format-prefix-foreground = ${colors.foreground-alt}
-format-prefix-underline = ${colors.secondary}
+format-prefix-underline = ${colors.foreground-alt}
 
 label-layout = %layout%
-label-layout-underline = ${colors.secondary}
+label-layout-underline = ${colors.foreground-alt}
 
 label-indicator-padding = 2
 label-indicator-margin = 1
@@ -109,7 +111,9 @@ interval = 60
 mount-0 = /
 mount-1 = /home
 
-label-mounted = disk( %mountpoint% ):%{F#0a81f5}%{F-}: %percentage_used%%
+format-mounted =    <label-mounted>
+
+label-mounted = %mountpoint% : %percentage_used%%
 label-unmounted = %mountpoint% not mounted
 label-unmounted-foreground = ${colors.foreground-alt}
 
@@ -120,20 +124,20 @@ label-focused = %index%
 label-focused-background = ${colors.focused-background}
 label-focused-foreground = ${colors.focused-foreground}
 label-focused-underline= ${colors.primary}
-label-focused-padding = 2
+label-focused-padding = 5
 
 label-occupied = %index%
 label-occupied-background = ${colors.occupied-background}
 label-occupied-foreground = ${colors.occupied-foreground}
-label-occupied-padding = 2
+label-occupied-padding = 5
 
 label-urgent = %index%!
 label-urgent-background = ${colors.alert}
-label-urgent-padding = 2
+label-urgent-padding = 5
 
 label-empty = %index%
 label-empty-foreground = ${colors.foreground-alt}
-label-empty-padding = 2
+label-empty-padding = 5
 
 ; Separator in between workspaces
 ; label-separator = |
@@ -176,18 +180,18 @@ card = intel_backlight
 [module/cpu]
 type = internal/cpu
 interval = 2
-format-prefix = " "
+format-prefix = "   "
 format-prefix-foreground = ${colors.foreground-alt}
 format-underline = #f90000
-label = CPU %percentage:2%%
+label = %percentage:2%%
 
 [module/memory]
 type = internal/memory
 interval = 2
-format-prefix = " "
+format-prefix = "    "
 format-prefix-foreground = ${colors.foreground-alt}
 format-underline = #4bffdc
-label = RAM %percentage_used%%
+label = %percentage_used%%
 
 [module/wlan]
 type = internal/network
@@ -216,12 +220,11 @@ type = internal/network
 interface = enp0s31f6
 interval = 3.0
 
-format-connected-underline = #55aa55
-format-connected-prefix = " "
+format-connected-underline = #00ff00
 format-connected-prefix-foreground = ${colors.foreground-alt}
-label-connected = eth
+label-connected =  
 
-format-disconnected = 
+format-disconnected = 
 ;format-disconnected-underline = #ff0000
 ;label-disconnected = %ifname% disconnected
 ;label-disconnected-foreground = ${colors.foreground-alt}
@@ -230,27 +233,27 @@ format-disconnected =
 type = internal/date
 interval = 5
 
-date = "%A %d/%m/%Y"
-date-alt = " %d/%m/%Y"
+date = "%A         %d/%m/%Y"
+date-alt = "          %d/%m/%Y"
 
-time = %H:%M
-time-alt = %H:%M:%S
+time =      %H:%M
+time-alt =       %H:%M:%S
 
 format-prefix = 
 format-prefix-foreground = ${colors.foreground-alt}
-format-underline = #0a6cf5
+format-underline = #00ff08
 
 label = %time% %date%
 
 [module/pulseaudio]
 type = internal/pulseaudio
 
-format-volume = <label-volume> <bar-volume>
-label-volume = VOL %percentage%%
+format-volume = <label-volume>
+label-volume =       %percentage%%
 label-volume-foreground = ${root.foreground}
 
-label-muted = 🔇 muted
-label-muted-foreground = #666
+label-muted =       muted
+label-muted-foreground = ${colors.alert}
 
 bar-volume-width = 10
 bar-volume-foreground-0 = #55aa55
@@ -276,7 +279,7 @@ bar-volume-empty-foreground = ${colors.foreground-alt}
 ;label-volume = VOL
 ;label-volume-foreground = ${root.foreground}
 
-;format-muted-prefix = " "
+;format-muted-prefix = " "
 ;format-muted-foreground = ${colors.foreground-alt}
 ;label-muted = sound muted
 
@@ -340,13 +343,13 @@ format-underline = #f50a4d
 format-warn = <ramp> <label-warn>
 format-warn-underline = ${self.format-underline}
 
-label = temp: %temperature-c%
+label = %temperature-c%
 label-warn = SUPERAQUECIMENTO: %temperature-c%
 label-warn-foreground = ${colors.secondary}
 
-ramp-0 = 
-ramp-1 = 
-ramp-2 = 
+ramp-0 = 
+ramp-1 = 
+ramp-2 = 
 ramp-foreground = ${colors.foreground-alt}
 
 
@@ -368,5 +371,5 @@ margin-bottom = 5
 type = custom/script
 interval = 1
 exec-if = "pgrep pomo"
-format= Pomodoro: <label>
+format=       <label>
 exec = pomo status

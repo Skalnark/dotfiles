@@ -1,6 +1,4 @@
 #! /bin/sh
-sxhkd &
-panel &
 $HOME/.config/polybar/launch.sh & 
 feh --bg-fill $HOME/Pictures/Wallpapers/wallpaper.jpg 
 

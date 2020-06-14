@@ -11,8 +11,7 @@ super + alt + Return
 
 # program launcher
 super + @space
-	dmenu_run
-
+    /home/skalnark/.config/polybar/scripts/menu
 # make sxhkd reload its configuration files:
 super + Escape
 	pkill -USR1 -x sxhkd
@@ -167,4 +166,5 @@ ctrl + alt + Delete
 
 ctrl + shift + Delete
     unclutter -iddle 0 --timeout 1 | xterm asciiquarium | echo $(xtrlock && pkill xterm; pkill asciiquarium)
+
 

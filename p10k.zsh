@@ -328,11 +328,11 @@
 
   #####################################[ vcs: git status ]######################################
   # Version control system colors.
-  typeset -g POWERLEVEL9K_VCS_CLEAN_BACKGROUND=4
-  typeset -g POWERLEVEL9K_VCS_MODIFIED_BACKGROUND=4
-  typeset -g POWERLEVEL9K_VCS_UNTRACKED_BACKGROUND=4
-  typeset -g POWERLEVEL9K_VCS_CONFLICTED_BACKGROUND=4
-  typeset -g POWERLEVEL9K_VCS_LOADING_BACKGROUND=4
+  typeset -g POWERLEVEL9K_VCS_CLEAN_BACKGROUND=50
+  typeset -g POWERLEVEL9K_VCS_MODIFIED_BACKGROUND=50
+  typeset -g POWERLEVEL9K_VCS_UNTRACKED_BACKGROUND=50
+  typeset -g POWERLEVEL9K_VCS_CONFLICTED_BACKGROUND=50
+  typeset -g POWERLEVEL9K_VCS_LOADING_BACKGROUND=50
 
   # Branch icon. Set this parameter to '\uF126 ' for the popular Powerline branch icon.
   typeset -g POWERLEVEL9K_VCS_BRANCH_ICON='\uF126 '
@@ -473,7 +473,7 @@
   # like this: 1|0.
   typeset -g POWERLEVEL9K_STATUS_OK_PIPE=true
   typeset -g POWERLEVEL9K_STATUS_OK_PIPE_VISUAL_IDENTIFIER_EXPANSION='✔'
-  typeset -g POWERLEVEL9K_STATUS_OK_PIPE_FOREGROUND=12
+  typeset -g POWERLEVEL9K_STATUS_OK_PIPE_FOREGROUND=9
   typeset -g POWERLEVEL9K_STATUS_OK_PIPE_BACKGROUND=20
 
   # Status when it's just an error code (e.g., '1'). No need to show it if prompt_char is enabled as
@@ -481,7 +481,7 @@
   typeset -g POWERLEVEL9K_STATUS_ERROR=true
   typeset -g POWERLEVEL9K_STATUS_ERROR_VISUAL_IDENTIFIER_EXPANSION='✘'
   typeset -g POWERLEVEL9K_STATUS_ERROR_FOREGROUND=9
-  typeset -g POWERLEVEL9K_STATUS_ERROR_BACKGROUND=0
+  typeset -g POWERLEVEL9K_STATUS_ERROR_BACKGROUND=
 
   # Status when the last command was terminated by a signal.
   typeset -g POWERLEVEL9K_STATUS_ERROR_SIGNAL=true
@@ -489,14 +489,14 @@
   typeset -g POWERLEVEL9K_STATUS_VERBOSE_SIGNAME=false
   typeset -g POWERLEVEL9K_STATUS_ERROR_SIGNAL_VISUAL_IDENTIFIER_EXPANSION='✘'
   typeset -g POWERLEVEL9K_STATUS_ERROR_SIGNAL_FOREGROUND=9
-  typeset -g POWERLEVEL9K_STATUS_ERROR_SIGNAL_BACKGROUND=0
+  typeset -g POWERLEVEL9K_STATUS_ERROR_SIGNAL_BACKGROUND=
 
   # Status when some part of a pipe command fails and the overall exit status is also non-zero.
   # It may look like this: 1|0.
   typeset -g POWERLEVEL9K_STATUS_ERROR_PIPE=true
   typeset -g POWERLEVEL9K_STATUS_ERROR_PIPE_VISUAL_IDENTIFIER_EXPANSION='✘'
   typeset -g POWERLEVEL9K_STATUS_ERROR_PIPE_FOREGROUND=9
-  typeset -g POWERLEVEL9K_STATUS_ERROR_PIPE_BACKGROUND=0
+  typeset -g POWERLEVEL9K_STATUS_ERROR_PIPE_BACKGROUND=
 
   ###################[ command_execution_time: duration of the last command ]###################
   # Execution time color.

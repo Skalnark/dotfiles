@@ -18,7 +18,7 @@
 
 [colors]
 ;background = ${xrdb:color0:#222}
-background = #55000000
+background = #99000000
 background-alt = #882266ff
 ;foreground = ${xrdb:color7:#222}
 foreground = #00ffbb
@@ -41,7 +41,7 @@ height = 27
 ;offset-x = 1%
 ;offset-y = 1%
 radius = 6.0
-fixed-center = true
+fixed-center = false
 
 background = ${colors.background}
 foreground = ${colors.foreground}
@@ -52,19 +52,19 @@ line-color = #f00
 border-size = 4
 border-color = #00000000
 
-padding-left = 6
-padding-right = 6
+padding-left = 2
+padding-right = 2
 
-module-margin-left = 6
-module-margin-right = 6
+module-margin-left = 1
+module-margin-right = 1
 
-font-0 = Exo2:pixelsize=12;style:bold;3
+font-0 = Iosevka Nerd Font:pixelsize=12;style:bold;3
 font-1 = Iosevka Nerd Font:pixelsize=13;3
 font-2 = Iosevka Nerd Font:pixelsize=13;3
 
-modules-left = bspwm pomo
-modules-center = date
-modules-right = filesystem xbacklight pulseaudio mic xkeyboard memory cpu wlan eth battery temperature menu
+modules-left = bspwm docker pomo
+modules-center = date spotify
+modules-right = pulseaudio xbacklight filesystem nvidiainfo xkeyboard memory cpu wlan eth battery temperature menu
 
 tray-position = right
 tray-padding = 2
@@ -94,7 +94,7 @@ blacklist-0 = num lock
 
 format-prefix-foreground = ${colors.foreground-alt}
 
-label-layout =       %layout%
+label-layout =   %layout%
 label-layout-underline = #0000ff
 
 label-indicator-padding = 2
@@ -108,9 +108,9 @@ interval = 60
 mount-0 = /
 mount-1 = /home
 
-format-mounted =    <label-mounted>
+format-mounted =  <label-mounted>
 
-label-mounted = %mountpoint% : %percentage_used%%
+label-mounted = %mountpoint%: %percentage_used%%
 label-unmounted = %mountpoint% not mounted
 label-unmounted-foreground = ${colors.foreground-alt}
 
@@ -121,21 +121,21 @@ label-focused = %index%
 label-focused-background = ${colors.focused-background}
 label-focused-foreground = ${colors.focused-foreground}
 label-focused-underline = ${colors.primary}
-label-focused-padding = 6
+label-focused-padding = 2
 
 label-occupied = %index%
 label-occupied-background = #88000000
 label-occupied-foreground = ${colors.occupied-foreground}
-label-occupied-padding = 4
+label-occupied-padding = 1.5
 label-occupied-underline = #ff00ff
 
 label-urgent = %index%!
 label-urgent-background = ${colors.alert}
-label-urgent-padding = 4
+label-urgent-padding = 1.5
 
 label-empty = %index%
 label-empty-foreground = ${colors.foreground-alt}
-label-empty-padding = 4
+label-empty-padding = 1.5
 
 ; Separator in between workspaces
 ; label-separator = |
@@ -178,7 +178,7 @@ card = intel_backlight
 [module/cpu]
 type = internal/cpu
 interval = 2
-format-prefix = "   "
+format-prefix = " "
 format-prefix-foreground = ${colors.foreground-alt}
 format-underline = #f90000
 label = %percentage:2%%
@@ -186,7 +186,7 @@ label = %percentage:2%%
 [module/memory]
 type = internal/memory
 interval = 2
-format-prefix = "    "
+format-prefix = "  "
 format-prefix-foreground = ${colors.foreground-alt}
 format-underline = #ffffff
 label = %percentage_used%%
@@ -220,9 +220,9 @@ interval = 3.0
 
 format-connected-underline = #00ff00
 format-connected-prefix-foreground = ${colors.foreground-alt}
-label-connected =  
+label-connected =   %upspeed%    %downspeed%
 
-format-disconnected = 
+format-disconnected =
 ;format-disconnected-underline = #ff0000
 ;label-disconnected = %ifname% disconnected
 ;label-disconnected-foreground = ${colors.foreground-alt}
@@ -231,11 +231,11 @@ format-disconnected = 
 type = internal/date
 interval = 5
 
-date = "%A         %d/%m/%Y"
-date-alt = "          %d/%m/%Y"
+date = "%A  %d/%m/%Y"
+date-alt = "  %d/%m/%Y"
 
-time =      %H:%M
-time-alt =       %H:%M:%S
+time =  %H:%M
+time-alt =  %H:%M:%S
 
 format-prefix = 
 format-prefix-foreground = ${colors.foreground-alt}
@@ -248,10 +248,10 @@ type = internal/pulseaudio
 
 use-ui-max = false
 format-volume = <label-volume>
-label-volume =       %percentage%%
+label-volume =   %percentage%%
 label-volume-foreground = ${root.foreground}
 
-label-muted =       muted
+label-muted =   muted
 label-muted-foreground = ${colors.alert}
 
 bar-volume-width = 10
@@ -335,7 +335,7 @@ animation-discharging-framerate = 750
 
 [module/temperature]
 type = internal/temperature
-thermal-zone = 0
+thermal-zone = 2
 warn-temperature = 70
 
 format = <ramp> <label>
@@ -348,8 +348,11 @@ label-warn = SUPERAQUECIMENTO: %temperature-c%
 label-warn-foreground = ${colors.secondary}
 
 ramp-0 = 
-ramp-1 = 
-ramp-2 = 
+ramp-1 = 
+ramp-2 = 
+ramp-3 = 
+ramp-4 = 
+
 ramp-foreground = ${colors.foreground-alt}
 
 
@@ -371,9 +374,8 @@ margin-bottom = 5
 type = custom/script
 interval = 1
 exec-if = "pgrep pomo"
-format=       <label>
+format=  <label>
 exec = pomo status
-
 
 [module/menu]
 type = custom/text
@@ -383,3 +385,30 @@ content-padding = 2
 content-foreground = ${colors.foreground-alt}
 click-left = $HOME/.config/polybar/scripts/sysmenu
 click-right = $HOME/.config/polybar/scripts/menu
+
+
+[module/spotify]
+type = custom/script
+interval = 1
+format-prefix = "  "
+format = <label>
+exec-if = pgrep spotify
+exec = echo $( echo $(dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.freedesktop.DBus.Properties.Get string:org.mpris.MediaPlayer2.Player string:Metadata | sed -n '/title/{n;p}' | cut -d '"' -f 2) ; echo : ; echo $(dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.freedesktop.DBus.Properties.Get string:org.mpris.MediaPlayer2.Player string:Metadata | sed -n '/artist/{n;n;p}' | cut -d '"' -f 2)) | tr '\n' ' '
+format-underline = #1db954
+
+[module/docker]
+type = custom/script
+tail = true
+exec-if = pgrep docker
+exec = docker ps -q | wc -l
+label =      %output%  
+format-underline = #00ff00
+
+
+[module/nvidiainfo]
+type = custom/script
+tail = true
+exec-if = nvidia-smi
+exec = nvidia-smi --loop=1 --query-gpu=temperature.gpu,utilization.gpu,utilization.memory --format=csv,noheader,nounits | sed -ur 's|([[:digit:]]+)[^[:digit:]]*([[:digit:]]+)[^[:digit:]]*([[:digit:]]+)| \2%   \3%   \1°|g'
+label =   %output%
+format-underline = #ff0000

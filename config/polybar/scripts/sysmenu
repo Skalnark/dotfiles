@@ -4,11 +4,11 @@
 
 BORDER="#1F1F1F"
 SEPARATOR="#1F1F1F"
-FOREGROUND="#00FFdd"
-BACKGROUND="#88330000"
-BACKGROUND_ALT="#330000ff"
-HIGHLIGHT_BACKGROUND="#005500"
-HIGHLIGHT_FOREGROUND="#00ddff"
+FOREGROUND="#000000"
+BACKGROUND="#33000000"
+BACKGROUND_ALT="#66ff0000"
+HIGHLIGHT_BACKGROUND="#ff0000"
+HIGHLIGHT_FOREGROUND="#000000"
 
 BLACK="#000000"
 WHITE="#ffffff"
@@ -51,9 +51,10 @@ MENU="$(rofi -no-lazy-grab -sep "|" -dmenu -i -p 'System :' \
 -color-normal "$BACKGROUND_ALT,$FOREGROUND,$BACKGROUND_ALT,$HIGHLIGHT_BACKGROUND,$HIGHLIGHT_FOREGROUND" \
 -color-active "$BACKGROUND,$MAGENTA,$BACKGROUND_ALT,$HIGHLIGHT_BACKGROUND,$HIGHLIGHT_FOREGROUND" \
 -color-urgent "$BACKGROUND,$YELLOW,$BACKGROUND_ALT,$HIGHLIGHT_BACKGROUND,$HIGHLIGHT_FOREGROUND" \
-<<< "  Lock|  Reboot|  Shutdown")"
+<<< "  Lock|  Logoff|  Reboot|  Shutdown")"
 case "$MENU" in
-  *Lock) unclutter -idle 0 --timeout 1 | xterm /home/skalnark/go/bin/gomatrix | echo $(xtrlock && pkill xterm; pkill gomatrix);;
+  *Lock) xset -dpms ; xset s off ; unclutter -idle 0 --timeout 1 | xterm /home/skalnark/go/bin/gomatrix | echo $(xtrlock && pkill xterm; pkill gomatrix; bspc wm -r);;
+  *Logoff) dm-tool switch-to-greeter ;;
   *Reboot) systemctl reboot ;;
   *Shutdown) systemctl -i poweroff
 esac

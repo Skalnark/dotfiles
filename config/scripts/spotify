@@ -1,0 +1,11 @@
+#!/usr/bin/env sh
+DIVIDER=":"
+PREFIX="   "
+if [[ $(pgrep -c -x 'spotify') == '0' ]]
+then
+	PREFIX=" "
+	DIVIDER=" "
+fi
+
+
+echo $( echo $PREFIX ; echo $(dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.freedesktop.DBus.Properties.Get string:org.mpris.MediaPlayer2.Player string:Metadata | sed -n '/title/{n;p}' | cut -d '"' -f 2) && echo $DIVIDER &&  echo $(dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.freedesktop.DBus.Properties.Get string:org.mpris.MediaPlayer2.Player string:Metadata | sed -n '/artist/{n;n;p}' | cut -d '"' -f 2)) | tr '\n' ' '

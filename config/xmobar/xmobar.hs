@@ -1,17 +1,21 @@
+--export :: Config -> IO ()
+--export = writeFile ".xmobarrc".show
+
 Config { 
 
    -- appearance
      font        = "xft:Iosevka Nerd Font:size=10:bold:antialias=true"
-   , bgColor     = "#004400"
-   , fgColor     = "#00f7ff"
+   , additionalFonts  = ["xft:Iosevka Nerd Font:size=12:bold:antialias=true"]
+   , bgColor     = "#001100"
+   , fgColor     = "#00e89e"
    , position    = Top
    , border      = BottomB
-   , borderColor = "#000000"
+   , borderColor = "#00aaaa"
    , alpha       = 160
    -- layout
    , sepChar =  "%"   -- delineator between plugin names and straight text
    , alignSep = "}{"  -- separator between left-right alignment
-   , template = "  %StdinReader%                                                                                          %date% }{%default:Master%    %multicpu% %coretemp%    %memory%         %dynnetwork%        %disku%      %docker%   <fc=#00ff00> %spotify%</fc>       "
+   , template = " <fc=#ff66ff>%StdinReader%</fc>         <fc=#ff5555>%locks%</fc>                                                                            %date% }{%default:Master%    %multicpu% %coretemp%    %memory%         %dynnetwork%        %disku%   <fn=1></fn>   %docker%   <fc=#00ff00> %spotify%</fc>   <fn=1></fn>   "
 --"%battery% | %multicpu% | %coretemp% | %memory% | %dynnetwork% }{ %RJTT% | %date% || %kbd% "
 
    , lowerOnStart =     True    -- send to bottom of window stack on start
@@ -29,7 +33,7 @@ Config {
         , Run Com "/bin/bash" ["-c", "$HOME/.config/xmobar/scripts/docker"] "docker" 100
 
         -- network activity monitor (dynamic interface resolution)
-        , Run DynNetwork     [ "--template" , "  <tx>kB/s     <rx>kB/s"
+        , Run DynNetwork     [ "--template" , "<fn=1></fn>  <tx>kB/s   <fn=1></fn>  <rx>kB/s"
                              , "--Low"      , "10000"       -- units: B/s
                              , "--High"     , "50000"       -- units: B/s
                              , "--low"      , "#00ddff"
@@ -38,7 +42,7 @@ Config {
                              ] 10
 
         -- cpu activity monitor
-        , Run MultiCpu       [ "--template" , " : <total2>%"
+        , Run MultiCpu       [ "--template" , "<fn=1></fn>  <total>%"
                              , "--Low"      , "50"         -- units: %
                              , "--High"     , "85"         -- units: %
                              , "--low"      , "#ffffff"
@@ -53,10 +57,10 @@ Config {
                              , "--low"      , "yellow"
                              , "--normal"   , "orange"
                              , "--high"     , "red"
-                             ] 50
+                             ] 10
                           
         -- memory usage monitor
-        , Run Memory         [ "--template" ," : <usedratio>%"
+        , Run Memory         [ "--template" ,"<fn=1></fn>  <usedratio>%"
                              , "--Low"      , "10"        -- units: %
                              , "--High"     , "60"        -- units: %
                              , "--low"      , "green"
@@ -83,14 +87,14 @@ Config {
 
         -- time and date indicator 
         --   (%F = y-m-d date, %a = day of week, %T = h:m:s time)
-        , Run Date           "<fc=#00f7ff>  %T - %a    %F</fc>" "date" 10
+        , Run Date           "<fn=1></fn>  <fc=#00f7ff>%T - %a</fc>  <fn=1></fn>  <fc=#00f7ff>%F</fc>" "date" 10
 
         -- keyboard layout indicator
         , Run Kbd            [ ("us(dvorak)" , "<fc=#00008B>DV</fc>")
                              , ("us"         , "<fc=#8B0000>US</fc>")
                              ]
         -- Disk Usage
-	, Run DiskU          [ ("/", " : <usedp>%"),  ("/home", "   : <usedp>%")]               
+	, Run DiskU          [ ("/", "<fn=1></fn> <usedp>%"),  ("/home", "  <fn=1></fn> <usedp>%")]               
                              [ "-L", "20" -- low
                              , "-H", "70" -- high
                              , "-m", "1"
@@ -100,7 +104,8 @@ Config {
                              , "--low", "#00ff34"] 20
        
        -- Volume
-       , Run Volume "default" "Master" [ "--template", "  <volume>%"
+       , Run Volume "default" "Master" [ "--template", "<fn=1></fn>  <volume>%"
                                        ] 10
-        ]
+       , Run Locks
+       ]
    }

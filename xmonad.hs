@@ -3,9 +3,15 @@
 import qualified Data.Map as M
 import qualified Data.Text.IO
 import Data.Monoid
+import Data.Either
+
+import Control.Exception (try)
+import GHC.IO.Exception (IOException(..))
+import qualified Data.ByteString as B
 
 import System.Exit
 import System.Process
+import System.Posix.Process
 
 
 import XMonad
@@ -18,20 +24,30 @@ import XMonad.Layout.Reflect
 import XMonad.Layout.Renamed
 import XMonad.Layout.Spacing
 import XMonad.Layout.ThreeColumns
+import XMonad.Layout.Grid
 import qualified XMonad.StackSet as W
 import XMonad.Util.Run
 import XMonad.Util.SpawnOnce
 
+
 import NeatInterpolation (text)
---import qualified Xmobar as Xmb
+import qualified Xmobar as Xmb
+
+
 main :: IO ()
 main = do
   --  p <- spawnPipe "./.config/polybar/launch.sh"
-  --  spawnPipe "mkdir -p $HOME/.config/xmobar && touch $HOME/.config/xmobar/xmobarrc &"
---  writeFile "$HOME/.config/xmobar/xmobarrc" $ show xmobarConfig
- 
-  xmprop <- spawnPipe "xmobar $HOME/.config/xmobar/xmobar.hs"
-  xmonad $ docks $ defaults xmprop
+  --try (spawnPipe "mkdir -p $HOME/.config/xmobar && touch $HOME/.config/xmobar/xmobarrc &") >>= printException
+  --try (writeConfig xmobarConfig) >>= printException 
+  --(readHandle, writeHandle) <- createPipe
+  --xmobarProcess <- forkProcess $ Xmb.xmobar xmobarConfig 
+   -- { Xmb.commands = Xmb.Run (Xmb.HandleReader readHandle "handle") : Xmb.commands xmobarConfig
+   -- }
+  --case Xmb.parseConfig xmobarConfig " " of
+  --  Left err -> print err
+  --  Right msg -> print $ snd msg
+  xmprop <- spawnPipe "xmobar -- $HOME/.config/xmobar/xmobar.hs"
+  xmonad $ docks $ defaults xmprop --writeHandle
 
 defaults xmprop =
   def
@@ -56,27 +72,21 @@ defaults xmprop =
     }
 
 
-data Symbols = Symbols { upload   :: String
-                       , download :: String
-                       , cpu      :: String
-                       , ram      :: String
-                       , disk     :: String
-                       , files    :: String
-                       , clock    :: String
-                       , calendar :: String
-                       , speaker  :: String
-                       }
-
-smb = Symbols { upload   = "\\uf093"
-              , download = "\\uf019"
-              , cpu      = "\\uf85a"
-              , ram      = "\\uf2db"
-              , disk     = "\\uf01c"
-              , files    = "\\uf413"
-              , clock    = "\\uf017"
-              , calendar = "\\uf5ec"
-              , speaker  = "\\uf485"
-              }
+----------------------------
+-- Icons
+uploadIcon   = "\xf093"
+downloadcon = "\xf019"
+cpuIcon      = "\xf85a"
+ramIcon      = "\xf2db"
+diskIcon     = "\xf01c"
+filesIcon    = "\xf413"
+clockIcon    = "\xf017"
+calendarIcon = "\xf5ec"
+speakerIcon  = "\xf485"
+webIcon      = "\xfa9e"
+codeIcon     = "\xf121 " -- "\xe61f  \xe796 \xf10b"
+musicIcon    = "\xf025  \xf9c6  \xfb6e"
+-------------------------------
 
 
 myTerminal = "kitty"
@@ -94,12 +104,15 @@ myModMask = mod4Mask
 
 -- > workspaces = ["web", "irc", "code" ] ++ map show [4..9]
 --
-myWorkspaces = ["1 - main", "2 - code", "3 - Audio", "4", "5", "6", "7", "8", "9"]
+myWorkspaces = [ "<fc=#ffb700> 1 - <fn=1>" ++ webIcon ++ "</fn> </fc>"
+               , "<fc=#00ff00> 2 - <fn=1>" ++ codeIcon ++ "</fn> </fc>"
+               , "<fc=#007bff> 3 - <fn=1>" ++ musicIcon ++ "</fn> </fc> "
+               , "4", "5", "6", "7", "8", "9"]
 
 -- Border colors for unfocused and focused windows, respectively.
-myNormalBorderColor = "#005500"
+myNormalBorderColor = "#000000"
 
-myFocusedBorderColor = "#00ff00"
+myFocusedBorderColor = "#00f7ff"
 
 ------------------------------------------------------------------------
 
@@ -148,12 +161,19 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) =
       ((modm, xK_period), sendMessage (IncMasterN (-1))),
       -- , ((modm              , xK_b     ), sendMessage ToggleStruts)
 
+      -- Quit xmonad
+      ((modm .|. shiftMask, xK_q), spawn "killall xmonad"),
       -- Restart xmonad
       ((modm, xK_q), spawn "killall xmobar && killall polybar && xmonad --recompile; xmonad --restart"),
       -- Run xmessage with a summary of the default keybindings (useful for beginners)
       ((modm .|. shiftMask, xK_slash), spawn ("echo \"" ++ help ++ "\" | xmessage -file -")),
       ((0, xK_Print), spawn "scrot $HOME/'Pictures/Screenshots/%Y-%m-%d_%H%M%S-$wx$h_scrot.png'"),
-      ((controlMask, xK_Print), spawn "sleep 0.2 ; scrot -s $HOME/'Pictures/Screenshots/%Y-%m-%d_%H%M%S-$wx$h_scrot.png'")
+      ((controlMask, xK_Print), spawn "sleep 0.2 ; scrot -s $HOME/'Pictures/Screenshots/%Y-%m-%d_%H%M%S-$wx$h_scrot.png'"),
+
+      -- volume control
+      ((0                     , 0x1008ff11), spawn "amixer -q sset Master 1%-"),
+      ((0                     , 0x1008ff13), spawn "amixer -q sset Master 1%+"),
+      ((0                     , 0x1008ff12), spawn "amixer set Master toggle")
     ]
       ++
       --
@@ -166,7 +186,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) =
       ]
       ++
       --
-      -- mod-{w,e,r}, Switch to physical/Xinerama screens 1, 2, or 3
+      -- mod-{w,e,r}, Switch to physical/XineramIcona screens 1, 2, or 3
       -- mod-shift-{w,e,r}, Move client to screen 1, 2, or 3
       --
       [ ((m .|. modm, key), screenWorkspace sc >>= flip whenJust (windows . f))
@@ -207,7 +227,7 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) =
 myLayout =
   avoidStruts
     ( spacingRaw False screenBorder True windowBorder True $
-        tiled ||| Full ||| bsp ||| threeCol ||| threeColMid ||| oneBig
+        tiled ||| mirrorTall ||| Full ||| bsp ||| threeCol ||| threeColMid ||| oneBig ||| grid
     )
   where
     --configs
@@ -215,19 +235,22 @@ myLayout =
     ratio = 1 / 2
     delta = 3 / 100
     screenBorder = Border 0 1 1 1
-    windowBorder = Border 0 1 1 1
+    windowBorder = Border 0 2 2 2
 
     --layouts
-    tiled = renamed [Replace "Tall"] $ reflectHoriz $ Tall nmaster delta ratio
+    tiled       = renamed [Replace "Tall"] $ reflectHoriz $ Tall nmaster delta ratio
 
-    bsp = reflectHoriz $ emptyBSP
+    bsp         = reflectHoriz $ emptyBSP
 
-    threeCol = ThreeCol nmaster delta (1 / 2)
+    threeCol    = ThreeCol nmaster delta (1 / 2)
 
     threeColMid = renamed [Replace "ThreeCol Mid"] $ ThreeColMid nmaster delta ratio
 
-    oneBig = OneBig (3 / 4) (3 / 4)
+    oneBig      = OneBig (3 / 4) (3 / 4)
+    
+    grid        = Grid
 
+    mirrorTall  = Mirror (Tall 1 (3/100) (3/5))
 ------------------------------------------------------------------------
 -- Window rules:
 
@@ -264,7 +287,7 @@ myStartupHook = do
   spawnOnce "setxkbmap -model abnt2 -layout br &"
   spawnOnce "xcompmgr -n&"
   spawnOnce "xrdb $HOME/.Xresources &"
-  spawnOnce "xsetroot -cursor_name left_ptr &"
+--  spawnOnce "xsetroot -cursor_name left_ptr &"
   spawnOnce "xbindkeys --poll-rc &"
   spawnOnce "wmname LG3D &"
   spawnOnce "feh --bg-fill $HOME/Pictures/Wallpapers/wallpaper.jpg &"
@@ -273,42 +296,55 @@ myStartupHook = do
 help :: String
 help = unlines ["read the code fucker"]
 
+printException :: Either IOError a -> IO ()
+printException (Right _) = putStrLn "No exception caught"
+printException (Left e) = putStrLn $ concat [ "ioe_filename = "
+                                            , show $ ioe_filename e
+                                            , ", ioe_description = "
+                                            , show $ ioe_description e
+                                            , ", ioe_errno = "
+                                            , show $ ioe_errno e
+                                            ]
 
-{-
+writeConfig :: Xmb.Config -> IO ()
+writeConfig config = writeFile "$USER/.config/xmobar/smobarrc" "show config"
 
-
-xmobarConfig = 
+xmobarConfig =
   Xmb.Config
     { Xmb.font = "xft:Iosevka Nerd Font:size=10:bold:antialias=true",
-      Xmb.additionalFonts = [],
-      Xmb.borderColor = "#000000",
-      Xmb.border = Xmb.TopB,
+      Xmb.additionalFonts = ["xft:Iosevka Nerd Font:size=10:bold:antialias=true"],
+      Xmb.wmClass = "Xmobar",
+      Xmb.wmName      = "xmobar",
       Xmb.bgColor = "#004400",
       Xmb.fgColor = "#00f7ff",
-      Xmb.alpha = 160,
       Xmb.position = Xmb.Top,
       Xmb.textOffset = -1,
+      Xmb.textOffsets = [-1],
       Xmb.iconOffset = -1,
-      Xmb.lowerOnStart = True,
-      Xmb.pickBroadest = False,
-      Xmb.persistent = False,
-      Xmb.hideOnStart = False,
-      Xmb.iconRoot = ".",
+      Xmb.border = Xmb.TopB,
+      Xmb.borderColor = "#000000",
+      Xmb.borderWidth = 1,
+      Xmb.alpha = 160,
+      Xmb.hideOnStart     = False,
       Xmb.allDesktops = True,
       Xmb.overrideRedirect = True,
+      Xmb.pickBroadest = False,
+      Xmb.lowerOnStart = True,
+      Xmb.persistent = False,
+      Xmb.iconRoot = ".",
       Xmb.sepChar = "%",
       Xmb.alignSep = "}{",
-      Xmb.template =
-        "%cpu% | %memory% * %swap% | %eth0% - %eth1% }\
-        \ %hw% { <fc=#ee9a00>%date%</fc>| %EGPH% | %uname%",
+      Xmb.template = "Hello, world}{",
+      Xmb.verbose         = False,
+        --"%cpuIcon% | %memory% * %swap% | %eth0% - %eth1% } %hw% { <fc=#ee9a00>%date%</fc>| %EGPH% | %uname%",
       Xmb.commands =         
-        [ Xmb.Run Xmb.StdinReader
+        [ Xmb.Run $ Xmb.StdinReader
        --, Xmb.Run Xmb.Com "/bin/bash" ["-c", "$HOME/.config/xmobar/scripts/spotify"] "spotify" 100
 
         --, Xmb.Run Xmb.Com "/bin/bash" ["-c", "$HOME/.config/xmobar/scripts/docker"] "docker" 100
 
         -- network activity monitor (dynamic interface resolution)
-        , Xmb.Run Xmb.DynNetwork     [ "--template" , (smb.upload ++ "  <tx>kB/s   " ++ smb.download ++ "  <rx>kB/s")
+        , Xmb.Run $ Xmb.DynNetwork     [ "--template" , (uploadIcon ++ "  <tx>kB/s   " ++ downloadcon ++ "  <rx>kB/s")
                              , "--Low"      , "10000"       -- units: B/s
                              , "--High"     , "50000"       -- units: B/s
                              , "--low"      , "#00ddff"
@@ -317,7 +353,7 @@ xmobarConfig =
                              ] 10
 
         -- cpu activity monitor
-        , Xmb.Run Xmb.MultiCpu       [ "--template" , (smb.cpu ++ " : <total2>%")
+        , Xmb.Run $ Xmb.MultiCpu       [ "--template" , (cpuIcon ++ " : <total2>%")
                              , "--Low"      , "50"         -- units: %
                              , "--High"     , "85"         -- units: %
                              , "--low"      , "#ffffff"
@@ -326,7 +362,7 @@ xmobarConfig =
                              ] 10
 
         -- cpu core temperature monitor
-        , Xmb.Run Xmb.CoreTemp       [ "--template" , "<core2>°C"
+        , Xmb.Run $ Xmb.CoreTemp       [ "--template" , "<core2>°C"
                              , "--Low"      , "70"        -- units: °C
                              , "--High"     , "80"        -- units: °C
                              , "--low"      , "yellow"
@@ -335,7 +371,7 @@ xmobarConfig =
                              ] 50
                           
         -- memory usage monitor
-        , Xmb.Run Xmb.Memory         [ "--template" , (smb.ram ++ " : <usedratio>%")
+        , Xmb.Run $ Xmb.Memory         [ "--template" , (ramIcon ++ " : <usedratio>%")
                              , "--Low"      , "10"        -- units: %
                              , "--High"     , "60"        -- units: %
                              , "--low"      , "green"
@@ -344,7 +380,7 @@ xmobarConfig =
                              ] 10
 
         -- battery monitor
-        , Xmb.Run Xmb.Battery        [ "--template" , "Batt: <acstatus>"
+        , Xmb.Run $ Xmb.Battery        [ "--template" , "Batt: <acstatus>"
                              , "--Low"      , "10"        -- units: %
                              , "--High"     , "80"        -- units: %
                              , "--low"      , "red"
@@ -362,14 +398,14 @@ xmobarConfig =
 
         -- time and date indicator 
         --   (%F = y-m-d date, %a = day of week, %T = h:m:s time)
-        , Xmb.Run Xmb.Date           ("<fc=#00f7ff>" ++ smb.clock ++ "  %T - %a  " ++smb.calendar ++"  %F</fc>") "date" 10
+        , Xmb.Run $ Xmb.Date           ("<fc=#00f7ff>" ++ clockIcon ++ "  %T - %a  " ++calendarIcon ++"  %F</fc>") "date" 10
 
         -- keyboard layout indicator
-        , Xmb.Run Xmb.Kbd            [ ("us(dvorak)" , "<fc=#00008B>DV</fc>")
+        , Xmb.Run $ Xmb.Kbd            [ ("us(dvorak)" , "<fc=#00008B>DV</fc>")
                              , ("us"         , "<fc=#8B0000>US</fc>")
                              ]
-        -- Disk Usage
-	      , Xmb.Run Xmb.DiskU          [ ("/", (smb.disk ++ " : <usedp>%")),  ("/home", ("  "++smb.files++" : <usedp>%"))]               
+        -- disk Usage
+	      , Xmb.Run $ Xmb.DiskU          [ ("/", (diskIcon ++ " : <usedp>%")),  ("/home", ("  "++filesIcon++" : <usedp>%"))]               
                              [ "-L", "20" -- low
                              , "-H", "70" -- high
                              , "-m", "1"
@@ -379,116 +415,7 @@ xmobarConfig =
                              , "--low", "#00ff34"] 20
        
        -- Volume
-       , Xmb.Run Xmb.Volume "default" "Master" [ "--template", (smb.speaker ++ "  <volume>%")
+       , Xmb.Run $ Xmb.Volume "default" "Master" [ "--template", (speakerIcon ++ "  <volume>%")
                                        ] 10
         ]
     }
-  -}
-
-xmobarConfig = [text|
-  Config
-    { font = "xft:Iosevka Nerd Font:size=10:bold:antialias=true",
-      additionalFonts = [],
-      borderColor = "#000000",
-      border = TopB,
-      bgColor = "#004400",
-      fgColor = "#00f7ff",
-      alpha = 160,
-      position = Top,
-      textOffset = -1,
-      iconOffset = -1,
-      lowerOnStart = True,
-      pickBroadest = False,
-      persistent = False,
-      hideOnStart = False,
-      iconRoot = ".",
-      allDesktops = True,
-      overrideRedirect = True,
-      sepChar = "%",
-      alignSep = "}{",
-      template =
-        "%cpu% | %memory% * %swap% | %eth0% - %eth1% }\
-        \ %hw% { <fc=#ee9a00>%date%</fc>| %EGPH% | %uname%",
-      commands =         
-        [ Run StdinReader
-       --, Run Com "/bin/bash" ["-c", "$$HOME/.config/xmobar/scripts/spotify"] "spotify" 100
-
-        --, Run Com "/bin/bash" ["-c", "$$HOME/.config/xmobar/scripts/docker"] "docker" 100
-
-        -- network activity monitor (dynamic interface resolution)
-        , Run DynNetwork     [ "--template" , (smb.upload ++ "  <tx>kB/s   " ++ smb.download ++ "  <rx>kB/s")
-                             , "--Low"      , "10000"       -- units: B/s
-                             , "--High"     , "50000"       -- units: B/s
-                             , "--low"      , "#00ddff"
-                             , "--normal"   , "#00ddff"
-                             , "--high"     , "#00ff00"
-                             ] 10
-
-        -- cpu activity monitor
-        , Run MultiCpu       [ "--template" , (smb.cpu ++ " : <total2>%")
-                             , "--Low"      , "50"         -- units: %
-                             , "--High"     , "85"         -- units: %
-                             , "--low"      , "#ffffff"
-                             , "--normal"   , "#ff8888"
-                             , "--high"     , "#ff3333"
-                             ] 10
-
-        -- cpu core temperature monitor
-        , Run CoreTemp       [ "--template" , "<core2>°C"
-                             , "--Low"      , "70"        -- units: °C
-                             , "--High"     , "80"        -- units: °C
-                             , "--low"      , "yellow"
-                             , "--normal"   , "orange"
-                             , "--high"     , "red"
-                             ] 50
-                          
-        -- memory usage monitor
-        , Run Memory         [ "--template" , (smb.ram ++ " : <usedratio>%")
-                             , "--Low"      , "10"        -- units: %
-                             , "--High"     , "60"        -- units: %
-                             , "--low"      , "green"
-                             , "--normal"   , "yellow"
-                             , "--high"     , "red"
-                             ] 10
-
-        -- battery monitor
-        , Run Battery        [ "--template" , "Batt: <acstatus>"
-                             , "--Low"      , "10"        -- units: %
-                             , "--High"     , "80"        -- units: %
-                             , "--low"      , "red"
-                             , "--normal"   , "orange"
-                             , "--high"     , "green"
-
-                             , "--" -- battery specific options
-                                       -- discharging status
-                                       , "-o"	, "<left>% (<timeleft>)"
-                                       -- AC "on" status
-                                       , "-O"	, "<fc=#dAA520>Charging</fc>"
-                                       -- charged status
-                                       , "-i"	, "<fc=#006000>Charged</fc>"
-                             ] 50
-
-        -- time and date indicator 
-        --   (%F = y-m-d date, %a = day of week, %T = h:m:s time)
-        , Run Date           ("<fc=#00f7ff>" ++ smb.clock ++ "  %T - %a  " ++smb.calendar ++"  %F</fc>") "date" 10
-
-        -- keyboard layout indicator
-        , Run Kbd            [ ("us(dvorak)" , "<fc=#00008B>DV</fc>")
-                             , ("us"         , "<fc=#8B0000>US</fc>")
-                             ]
-        -- Disk Usage
-	      , Run DiskU          [ ("/", (smb.disk ++ " : <usedp>%")),  ("/home", ("  "++smb.files++" : <usedp>%"))]               
-                             [ "-L", "20" -- low
-                             , "-H", "70" -- high
-                             , "-m", "1"
-                             , "-p", "3" -- have no idea
-                             , "--normal", "#ffffff"
-                             , "--high", "#ff4444"
-                             , "--low", "#00ff34"] 20
-       
-       -- Volume
-       , Run Volume "default" "Master" [ "--template", (smb.speaker ++ "  <volume>%")
-                                       ] 10
-        ]
-    }
-|]

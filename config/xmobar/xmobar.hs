@@ -6,16 +6,16 @@ Config {
    -- appearance
      font        = "xft:Iosevka Nerd Font:size=10:bold:antialias=true"
    , additionalFonts  = ["xft:Iosevka Nerd Font:size=12:bold:antialias=true"]
-   , bgColor     = "#001100"
-   , fgColor     = "#00e89e"
+   , bgColor     = "#000000"
+   , fgColor     = "#ffffff"
    , position    = Top
    , border      = BottomB
-   , borderColor = "#00aaaa"
-   , alpha       = 160
+   , borderColor = "#ffffff"
+   , alpha       = 255
    -- layout
    , sepChar =  "%"   -- delineator between plugin names and straight text
    , alignSep = "}{"  -- separator between left-right alignment
-   , template = " <fc=#ff66ff>%StdinReader%</fc>         <fc=#ff5555>%locks%</fc>                                                                            %date% }{%default:Master%    %multicpu% %coretemp%    %memory%         %dynnetwork%        %disku%   <fn=1></fn>   %docker%   <fc=#00ff00> %spotify%</fc>   <fn=1></fn>   "
+   , template = " <fc=#ffffff>%StdinReader%</fc>         <fc=#ffffff>%locks%</fc>                                                                            %date% }{%default:Master%    %multicpu% %coretemp%    %memory%         %dynnetwork%        %disku%   <fn=1> </fn> %docker%   <fc=#009900> %spotify%</fc>   <fn=1> </fn>   "
 --"%battery% | %multicpu% | %coretemp% | %memory% | %dynnetwork% }{ %RJTT% | %date% || %kbd% "
 
    , lowerOnStart =     True    -- send to bottom of window stack on start
@@ -33,78 +33,78 @@ Config {
         , Run Com "/bin/bash" ["-c", "$HOME/.config/xmobar/scripts/docker"] "docker" 100
 
         -- network activity monitor (dynamic interface resolution)
-        , Run DynNetwork     [ "--template" , "<fn=1></fn>  <tx>kB/s   <fn=1></fn>  <rx>kB/s"
+        , Run DynNetwork     [ "--template" , "<fn=1> </fn><tx>kB/s   <fn=1> </fn><rx>kB/s"
                              , "--Low"      , "10000"       -- units: B/s
                              , "--High"     , "50000"       -- units: B/s
-                             , "--low"      , "#00ddff"
-                             , "--normal"   , "#00ddff"
-                             , "--high"     , "#00ff00"
+                             , "--low"      , "#ffffff"
+                             , "--normal"   , "#ffffff"
+                             , "--high"     , "#ffffff"
                              ] 10
 
         -- cpu activity monitor
-        , Run MultiCpu       [ "--template" , "<fn=1></fn>  <total>%"
+        , Run MultiCpu       [ "--template" , "<fn=1> </fn><total>%"
                              , "--Low"      , "50"         -- units: %
                              , "--High"     , "85"         -- units: %
                              , "--low"      , "#ffffff"
-                             , "--normal"   , "#ff8888"
-                             , "--high"     , "#ff3333"
+                             , "--normal"   , "#ffffff"
+                             , "--high"     , "#ffffff"
                              ] 10
 
         -- cpu core temperature monitor
         , Run CoreTemp       [ "--template" , "<core2>°C"
                              , "--Low"      , "70"        -- units: °C
                              , "--High"     , "80"        -- units: °C
-                             , "--low"      , "yellow"
-                             , "--normal"   , "orange"
-                             , "--high"     , "red"
+                             , "--low"      , "#ffffff"
+                             , "--normal"   , "#ffffff"
+                             , "--high"     , "#ff0000"
                              ] 10
                           
         -- memory usage monitor
-        , Run Memory         [ "--template" ,"<fn=1></fn>  <usedratio>%"
+        , Run Memory         [ "--template" ,"<fn=1> </fn><usedratio>%"
                              , "--Low"      , "10"        -- units: %
-                             , "--High"     , "60"        -- units: %
-                             , "--low"      , "green"
-                             , "--normal"   , "yellow"
-                             , "--high"     , "red"
+                             , "--High"     , "70"        -- units: %
+                             , "--low"      , "#ffffff"
+                             , "--normal"   , "#ffffff"
+                             , "--high"     , "#ff0000"
                              ] 10
 
         -- battery monitor
         , Run Battery        [ "--template" , "Batt: <acstatus>"
                              , "--Low"      , "10"        -- units: %
                              , "--High"     , "80"        -- units: %
-                             , "--low"      , "red"
-                             , "--normal"   , "orange"
-                             , "--high"     , "green"
+                             , "--low"      , "#ffffff"
+                             , "--normal"   , "#ffffff"
+                             , "--high"     , "#ff0000"
 
                              , "--" -- battery specific options
                                        -- discharging status
                                        , "-o"	, "<left>% (<timeleft>)"
                                        -- AC "on" status
-                                       , "-O"	, "<fc=#dAA520>Charging</fc>"
+                                       , "-O"	, "<fc=#ffffff>Charging</fc>"
                                        -- charged status
-                                       , "-i"	, "<fc=#006000>Charged</fc>"
+                                       , "-i"	, "<fc=#ffffff>Charged</fc>"
                              ] 50
 
         -- time and date indicator 
         --   (%F = y-m-d date, %a = day of week, %T = h:m:s time)
-        , Run Date           "<fn=1></fn>  <fc=#00f7ff>%T - %a</fc>  <fn=1></fn>  <fc=#00f7ff>%F</fc>" "date" 10
+        , Run Date           "<fn=1> </fn> <fc=#ffffff>%T - %a</fc>  <fn=1> </fn> <fc=#ffffff>%F</fc>" "date" 10
 
         -- keyboard layout indicator
-        , Run Kbd            [ ("us(dvorak)" , "<fc=#00008B>DV</fc>")
-                             , ("us"         , "<fc=#8B0000>US</fc>")
+        , Run Kbd            [ ("us(dvorak)" , "<fc=#ffffff>DV</fc>")
+                             , ("us"         , "<fc=#ffffff>US</fc>")
                              ]
         -- Disk Usage
-	, Run DiskU          [ ("/", "<fn=1></fn> <usedp>%"),  ("/home", "  <fn=1></fn> <usedp>%")]               
+	, Run DiskU          [ ("/", "<fn=1> </fn> <usedp>%"),  ("/home", "  <fn=1></fn> <usedp>%")]               
                              [ "-L", "20" -- low
                              , "-H", "70" -- high
                              , "-m", "1"
                              , "-p", "3" -- have no idea
                              , "--normal", "#ffffff"
-                             , "--high", "#ff4444"
-                             , "--low", "#00ff34"] 20
+                             , "--high", "#ff0000"
+                             , "--low", "#ffffff"] 20
        
        -- Volume
-       , Run Volume "default" "Master" [ "--template", "<fn=1></fn>  <volume>%"
+       , Run Volume "default" "Master" [ "--template", "<fn=1> </fn> <volume>%"
                                        ] 10
        , Run Locks
        ]

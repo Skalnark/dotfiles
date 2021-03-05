@@ -98,21 +98,21 @@ myClickJustFocuses :: Bool
 myClickJustFocuses = False
 
 myBorderWidth :: Dimension
-myBorderWidth = 1
+myBorderWidth = 2
 
 myModMask = mod4Mask
 
 -- > workspaces = ["web", "irc", "code" ] ++ map show [4..9]
 --
-myWorkspaces = [ "<fc=#ffb700> 1 - <fn=1>" ++ webIcon ++ "</fn> </fc>"
-               , "<fc=#00ff00> 2 - <fn=1>" ++ codeIcon ++ "</fn> </fc>"
-               , "<fc=#007bff> 3 - <fn=1>" ++ musicIcon ++ "</fn> </fc> "
+myWorkspaces = [ "<fc=#00ff00> 1 - <fn=1>" ++ webIcon ++ " </fn> </fc>"
+               , "<fc=#ff0000> 2 - <fn=1>" ++ codeIcon ++ " </fn> </fc>"
+               , "<fc=#6666ff> 3 - <fn=1>" ++ musicIcon ++ " </fn> </fc> "
                , "4", "5", "6", "7", "8", "9"]
 
 -- Border colors for unfocused and focused windows, respectively.
-myNormalBorderColor = "#000000"
+myNormalBorderColor = "#222222"
 
-myFocusedBorderColor = "#00f7ff"
+myFocusedBorderColor = "#ffffff"
 
 ------------------------------------------------------------------------
 
@@ -123,6 +123,8 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) =
   M.fromList $
     -- launch a terminal
     [ ((modm, xK_Return), spawn $ XMonad.terminal conf),
+   -- ((modm .|. shiftMask, xK_Return), spawn $ XMonad.terminal "kitty"),
+      ((modm .|. shiftMask, xK_Return), spawn "kitty"),
       -- launch dmenu
       ((modm, xK_space), spawn "/home/skalnark/.config/polybar/scripts/menu"),
       ((controlMask .|. mod1Mask, xK_Delete), spawn "/home/skalnark/.config/polybar/scripts/sysmenu"),
@@ -167,8 +169,10 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) =
       ((modm, xK_q), spawn "killall xmobar && killall polybar && xmonad --recompile; xmonad --restart"),
       -- Run xmessage with a summary of the default keybindings (useful for beginners)
       ((modm .|. shiftMask, xK_slash), spawn ("echo \"" ++ help ++ "\" | xmessage -file -")),
-      ((0, xK_Print), spawn "scrot $HOME/'Pictures/Screenshots/%Y-%m-%d_%H%M%S-$wx$h_scrot.png'"),
-      ((controlMask, xK_Print), spawn "sleep 0.2 ; scrot -s $HOME/'Pictures/Screenshots/%Y-%m-%d_%H%M%S-$wx$h_scrot.png'"),
+      --((0, xK_Print), spawn "scrot $HOME/'Pictures/Screenshots/%Y-%m-%d_%H%M%S-$wx$h_scrot.png'"),
+      ((0, xK_Print), spawn "scrot -o $HOME/'Pictures/Screenshots/Print.png' && xclip -selection clipboard -target image/png $HOME/'Pictures/Screenshots/Print.png'"),
+      --((controlMask, xK_Print), spawn "sleep 0.2 ; scrot -s $HOME/'Pictures/Screenshots/%Y-%m-%d_%H%M%S-$wx$h_scrot.png'"),
+      ((controlMask, xK_Print), spawn "sleep 0.2; scrot -s -o $HOME/'Pictures/Screenshots/Print.png' && xclip -selection clipboard -target image/png $HOME/'Pictures/Screenshots/Print.png'"), 
 
       -- volume control
       ((0                     , 0x1008ff11), spawn "amixer -q sset Master 1%-"),
@@ -284,6 +288,7 @@ myLogHook xmprop = dynamicLogWithPP $ xmobarPP {ppOutput = hPutStrLn xmprop}
 -- By default, do nothing.
 myStartupHook :: X ()
 myStartupHook = do
+  spawnOnce "xsetroot -cursor_name left_ptr &"
   spawnOnce "setxkbmap -model abnt2 -layout br &"
   spawnOnce "xcompmgr -n&"
   spawnOnce "xrdb $HOME/.Xresources &"
@@ -389,11 +394,11 @@ xmobarConfig =
 
                              , "--" -- battery specific options
                                        -- discharging status
-                                       , "-o"	, "<left>% (<timeleft>)"
+                                       , "-o", "<left>% (<timeleft>)"
                                        -- AC "on" status
-                                       , "-O"	, "<fc=#dAA520>Charging</fc>"
+                                       , "-O" , "<fc=#dAA520>Charging</fc>"
                                        -- charged status
-                                       , "-i"	, "<fc=#006000>Charged</fc>"
+                                       , "-i", "<fc=#006000>Charged</fc>"
                              ] 50
 
         -- time and date indicator 
@@ -405,7 +410,7 @@ xmobarConfig =
                              , ("us"         , "<fc=#8B0000>US</fc>")
                              ]
         -- disk Usage
-	      , Xmb.Run $ Xmb.DiskU          [ ("/", (diskIcon ++ " : <usedp>%")),  ("/home", ("  "++filesIcon++" : <usedp>%"))]               
+        , Xmb.Run $ Xmb.DiskU    [ ("/", (diskIcon ++ " : <usedp>%")),  ("/home", ("  "++filesIcon++" : <usedp>%"))]               
                              [ "-L", "20" -- low
                              , "-H", "70" -- high
                              , "-m", "1"

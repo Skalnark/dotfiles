@@ -104,8 +104,8 @@ myModMask = mod4Mask
 
 -- > workspaces = ["web", "irc", "code" ] ++ map show [4..9]
 --
-myWorkspaces = [ "<fc=#00ff00> 1 - <fn=1>" ++ webIcon ++ " </fn> </fc>"
-               , "<fc=#ff0000> 2 - <fn=1>" ++ codeIcon ++ " </fn> </fc>"
+myWorkspaces = [ "<fc=#009900> 1 - <fn=1>" ++ webIcon ++ " </fn> </fc>"
+               , "<fc=#990000> 2 - <fn=1>" ++ codeIcon ++ " </fn> </fc>"
                , "<fc=#6666ff> 3 - <fn=1>" ++ musicIcon ++ " </fn> </fc> "
                , "4", "5", "6", "7", "8", "9"]
 

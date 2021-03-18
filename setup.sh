@@ -7,7 +7,7 @@ cp zshrc $HOME/.zshrc
 cp vimrc $HOME/.vimrc
 
 rm $HOME/.config/kitty/theme.conf
-ln $HOME/.config/kitty/kitty-themes/themes/BW.conf $HOME/.config/kitty/theme.conf
+ln $HOME/.config/kitty/kitty-themes/themes/Flatland.conf $HOME/.config/kitty/theme.conf
 
 
 echo DONE!

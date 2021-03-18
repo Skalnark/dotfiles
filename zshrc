@@ -32,6 +32,7 @@ export PATH="$PATH:/home/skalnark/Application/flutter/bin"
 export PATH="$PATH:/home/skalnark/Application/android-studio/bin"
 export PATH="$PATH:/home/skalnark/.dotnet/tools"
 export PATH="$PATH:/home/skalnark/Application/VSCode-linux-x64/bin"
+export PATH="$PATH:/home/Application/Sevenz2101-linux-x64"
 export GOPATH=$HOME/go
 export GOBIN=$HOME/go/bin
 export PATH=$PATH:$GOPATH

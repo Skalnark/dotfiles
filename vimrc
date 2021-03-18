@@ -14,6 +14,4 @@ Plug 'junegunn/seoul256.vim'
 " List ends here. Plugins become visible to Vim after this call.
 call plug#end()
 
-colorscheme cyberpunkneon
-
 hi Normal guibg=NONE ctermbg=NONE

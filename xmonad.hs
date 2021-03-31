@@ -86,6 +86,7 @@ speakerIcon  = "\xf485"
 webIcon      = "\xfa9e"
 codeIcon     = "\xf121 " -- "\xe61f  \xe796 \xf10b"
 musicIcon    = "\xf025  \xf9c6  \xfb6e"
+miscIcon     = "\xf120"
 -------------------------------
 
 
@@ -104,10 +105,11 @@ myModMask = mod4Mask
 
 -- > workspaces = ["web", "irc", "code" ] ++ map show [4..9]
 --
-myWorkspaces = [ "<fc=#009900> 1 - <fn=1>" ++ webIcon ++ " </fn> </fc>"
-               , "<fc=#990000> 2 - <fn=1>" ++ codeIcon ++ " </fn> </fc>"
-               , "<fc=#6666ff> 3 - <fn=1>" ++ musicIcon ++ " </fn> </fc> "
-               , "4", "5", "6", "7", "8", "9"]
+myWorkspaces = [ "<fc=#009900><fn=1>" ++ webIcon ++ " </fn> </fc>"
+               , "<fc=#990000><fn=1>" ++ codeIcon ++ " </fn> </fc>"
+	       , "<fc=#00ffdd><fn=1>" ++ miscIcon ++ " </fn> </fc>"
+               , "<fc=#6666ff><fn=1>" ++ musicIcon ++ " </fn> </fc> "
+               , "5", "6", "7", "8", "9"]
 
 -- Border colors for unfocused and focused windows, respectively.
 myNormalBorderColor = "#222222"
@@ -141,8 +143,9 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) =
       ((modm, xK_n), refresh),
       -- Move focus to the next window
       ((modm, xK_Down), windows W.focusDown),
+      ((modm, xK_j), windows W.focusDown),
       -- Move focus to the previous window
-      ((modm, xK_Up), windows W.focusUp),
+      ((modm, xK_k), windows W.focusUp),
       -- Move focus to the master window
       ((modm, xK_m), windows W.focusMaster),
       -- Swap the focused window and the master window
@@ -186,6 +189,11 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) =
       --
       [ ((m .|. modm, k), windows $ f i)
         | (i, k) <- zip (XMonad.workspaces conf) [xK_1 .. xK_9],
+          (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]
+      ]
+      ++
+      [ ((m .|. modm, k), windows $ f i)
+        | (i, k) <- zip (XMonad.workspaces conf) [xK_KP_1 .. xK_KP_9],
           (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]
       ]
       ++

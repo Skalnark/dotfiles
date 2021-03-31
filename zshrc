@@ -28,11 +28,11 @@ source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-export PATH="$PATH:/home/skalnark/Application/flutter/bin"
-export PATH="$PATH:/home/skalnark/Application/android-studio/bin"
+export PATH="$PATH:/home/skalnark/bin/flutter/bin"
+export PATH="$PATH:/home/skalnark/bin/android-studio/bin"
 export PATH="$PATH:/home/skalnark/.dotnet/tools"
-export PATH="$PATH:/home/skalnark/Application/VSCode-linux-x64/bin"
-export PATH="$PATH:/home/Application/Sevenz2101-linux-x64"
+export PATH="$PATH:/home/skalnark/bin/VSCode-linux-x64/bin"
+export PATH="$PATH:/home/bin/Sevenz2101-linux-x64"
 export GOPATH=$HOME/go
 export GOBIN=$HOME/go/bin
 export PATH=$PATH:$GOPATH

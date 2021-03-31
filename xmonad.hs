@@ -75,7 +75,7 @@ defaults xmprop =
 ----------------------------
 -- Icons
 uploadIcon   = "\xf093"
-downloadcon = "\xf019"
+downloadcon  = "\xf019"
 cpuIcon      = "\xf85a"
 ramIcon      = "\xf2db"
 diskIcon     = "\xf01c"
@@ -84,8 +84,8 @@ clockIcon    = "\xf017"
 calendarIcon = "\xf5ec"
 speakerIcon  = "\xf485"
 webIcon      = "\xfa9e"
-codeIcon     = "\xf121 " -- "\xe61f  \xe796 \xf10b"
-musicIcon    = "\xf025  \xf9c6  \xfb6e"
+codeIcon     = "\xf121" -- \xe61f  \xe796 \xf10b"
+musicIcon    = "\xf025" --  \xf9c6  \xfb6e"
 miscIcon     = "\xf120"
 -------------------------------
 

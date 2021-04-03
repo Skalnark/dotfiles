@@ -105,10 +105,10 @@ myModMask = mod4Mask
 
 -- > workspaces = ["web", "irc", "code" ] ++ map show [4..9]
 --
-myWorkspaces = [ "<fc=#009900><fn=1>" ++ webIcon ++ " </fn> </fc>"
-               , "<fc=#990000><fn=1>" ++ codeIcon ++ " </fn> </fc>"
-	       , "<fc=#00ffdd><fn=1>" ++ miscIcon ++ " </fn> </fc>"
-               , "<fc=#6666ff><fn=1>" ++ musicIcon ++ " </fn> </fc> "
+myWorkspaces = [ "<fc=#00dd00><fn=1> " ++ webIcon ++ " </fn> </fc>"
+               , "<fc=#ffdddd><fn=1> " ++ codeIcon ++ " </fn> </fc>"
+	       , "<fc=#00ffdd><fn=1> " ++ miscIcon ++ " </fn> </fc>"
+               , "<fc=#6666ff><fn=1> " ++ musicIcon ++ " </fn> </fc> "
                , "5", "6", "7", "8", "9"]
 
 -- Border colors for unfocused and focused windows, respectively.
@@ -145,7 +145,8 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) =
       ((modm, xK_Down), windows W.focusDown),
       ((modm, xK_j), windows W.focusDown),
       -- Move focus to the previous window
-      ((modm, xK_k), windows W.focusUp),
+      ((modm, xK_Up), windows W.focusUp),
+      ((modm .|. shiftMask, xK_j), windows W.focusMaster),
       -- Move focus to the master window
       ((modm, xK_m), windows W.focusMaster),
       -- Swap the focused window and the master window

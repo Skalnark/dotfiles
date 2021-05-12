@@ -114,7 +114,7 @@ myWorkspaces = [ "<fc=#00dd00><fn=1> " ++ webIcon ++ " </fn> </fc>"
 -- Border colors for unfocused and focused windows, respectively.
 myNormalBorderColor = "#222222"
 
-myFocusedBorderColor = "#ffffff"
+myFocusedBorderColor = "#00ff99"
 
 ------------------------------------------------------------------------
 

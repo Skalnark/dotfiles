@@ -11,7 +11,7 @@ Config {
    , position    = Top
    , border      = BottomB
    , borderColor = "#ffffff"
-   , alpha       = 255
+   , alpha       =  128
    -- layout
    , sepChar =  "%"   -- delineator between plugin names and straight text
    , alignSep = "}{"  -- separator between left-right alignment

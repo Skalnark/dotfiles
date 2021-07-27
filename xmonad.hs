@@ -179,6 +179,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) =
       ((0, xK_Print), spawn "scrot -o $HOME/'Pictures/Screenshots/Print.png' && xclip -selection clipboard -target image/png $HOME/'Pictures/Screenshots/Print.png'"),
       --((controlMask, xK_Print), spawn "sleep 0.2 ; scrot -s $HOME/'Pictures/Screenshots/%Y-%m-%d_%H%M%S-$wx$h_scrot.png'"),
       ((controlMask, xK_Print), spawn "sleep 0.2; scrot -s -o $HOME/'Pictures/Screenshots/Print.png' && xclip -selection clipboard -target image/png $HOME/'Pictures/Screenshots/Print.png'"), 
+      ((modm .|. shiftMask, xK_s), spawn "sleep 0.2; scrot -s -o $HOME/'Pictures/Screenshots/Print.png' && xclip -selection clipboard -target image/png $HOME/'Pictures/Screenshots/Print.png'"), 
 
       -- volume control
       ((0                     , 0x1008ff11), spawn "amixer -q sset Master 1%-"),

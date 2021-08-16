@@ -128,8 +128,8 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) =
    -- ((modm .|. shiftMask, xK_Return), spawn $ XMonad.terminal "kitty"),
       ((modm .|. shiftMask, xK_Return), spawn "kitty"),
       -- launch dmenu
-      ((modm, xK_space), spawn "/home/skalnark/.config/polybar/scripts/menu"),
-      ((controlMask .|. mod1Mask, xK_Delete), spawn "/home/skalnark/.config/polybar/scripts/sysmenu"),
+      ((modm, xK_space), spawn "$HOME/.config/polybar/scripts/menu"),
+      ((controlMask .|. shiftMask, xK_Delete), spawn "$HOME/.config/polybar/scripts/sysmenu"),
       -- launch gmrun
       ((modm .|. shiftMask, xK_p), spawn "gmrun"),
       -- close focused window

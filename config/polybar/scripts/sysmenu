@@ -53,8 +53,8 @@ MENU="$(rofi -no-lazy-grab -sep "|" -dmenu -i -p 'System :' \
 -color-urgent "$BACKGROUND,$YELLOW,$BACKGROUND_ALT,$HIGHLIGHT_BACKGROUND,$HIGHLIGHT_FOREGROUND" \
 <<< "  Lock|  Logoff|  Reboot|  Shutdown")"
 case "$MENU" in
-  *Lock) xset -dpms ; xset s off ; unclutter -idle 0 --timeout 1 | xterm /home/skalnark/go/bin/gomatrix | echo $(xtrlock && pkill xterm; pkill gomatrix; bspc wm -r);;
-  *Logoff) dm-tool switch-to-greeter ;;
+  *Lock) dm-tool switch-to-greeter ;;
+  *Logoff) pkill X ;;
   *Reboot) systemctl reboot ;;
   *Shutdown) systemctl -i poweroff
 esac

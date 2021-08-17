@@ -87,6 +87,8 @@ webIcon      = "\xfa9e"
 codeIcon     = "\xf121" -- \xe61f  \xe796 \xf10b"
 musicIcon    = "\xf025" --  \xf9c6  \xfb6e"
 miscIcon     = "\xf120"
+workIcon     = "\xfab4"
+chatIcon    =  "\xf0e6"
 -------------------------------
 
 
@@ -109,7 +111,9 @@ myWorkspaces = [ "<fc=#00dd00><fn=1> " ++ webIcon ++ " </fn> </fc>"
                , "<fc=#ffdddd><fn=1> " ++ codeIcon ++ " </fn> </fc>"
 	       , "<fc=#00ffdd><fn=1> " ++ miscIcon ++ " </fn> </fc>"
                , "<fc=#6666ff><fn=1> " ++ musicIcon ++ " </fn> </fc> "
-               , "5", "6", "7", "8", "9"]
+               , "<fc=#00a6ff><fn=1> " ++ workIcon ++ " </fn> </fc>"
+               , "<fc=#00ff77><fn=1> " ++ chatIcon ++ " </fn> </fc>"
+               , "7", "8", "9"]
 
 -- Border colors for unfocused and focused windows, respectively.
 myNormalBorderColor = "#222222"

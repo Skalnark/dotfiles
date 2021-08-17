@@ -107,12 +107,12 @@ myModMask = mod4Mask
 
 -- > workspaces = ["web", "irc", "code" ] ++ map show [4..9]
 --
-myWorkspaces = [ "<fc=#00dd00><fn=1> " ++ webIcon ++ " </fn> </fc>"
-               , "<fc=#ffdddd><fn=1> " ++ codeIcon ++ " </fn> </fc>"
-	       , "<fc=#00ffdd><fn=1> " ++ miscIcon ++ " </fn> </fc>"
-               , "<fc=#6666ff><fn=1> " ++ musicIcon ++ " </fn> </fc> "
-               , "<fc=#00a6ff><fn=1> " ++ workIcon ++ " </fn> </fc>"
-               , "<fc=#00ff77><fn=1> " ++ chatIcon ++ " </fn> </fc>"
+myWorkspaces = [ "<fc=#00dd00><fn=1> 1" ++ webIcon ++ " </fn> </fc>"
+               , "<fc=#ffdddd><fn=1> 2" ++ codeIcon ++ " </fn> </fc>"
+	             , "<fc=#00ffdd><fn=1> 3" ++ miscIcon ++ " </fn> </fc>"
+               , "<fc=#6666ff><fn=1> 4" ++ musicIcon ++ " </fn> </fc> "
+               , "<fc=#00a6ff><fn=1> 5" ++ workIcon ++ " </fn> </fc>"
+               , "<fc=#00ff77><fn=1> 6" ++ chatIcon ++ " </fn> </fc>"
                , "7", "8", "9"]
 
 -- Border colors for unfocused and focused windows, respectively.

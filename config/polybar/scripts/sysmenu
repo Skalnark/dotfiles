@@ -53,8 +53,8 @@ MENU="$(rofi -no-lazy-grab -sep "|" -dmenu -i -p 'System :' \
 -color-urgent "$BACKGROUND,$YELLOW,$BACKGROUND_ALT,$HIGHLIGHT_BACKGROUND,$HIGHLIGHT_FOREGROUND" \
 <<< "  Lock|  Logoff|  Reboot|  Shutdown")"
 case "$MENU" in
-  *Lock) dm-tool switch-to-greeter ;;
-  *Logoff) pkill X ;;
+  *Logoff) dm-tool switch-to-greeter ;;
+  #*Logoff) pkill X ;;
   *Reboot) systemctl reboot ;;
   *Shutdown) systemctl -i poweroff
 esac

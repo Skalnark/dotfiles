@@ -1,6 +1,6 @@
 #!/usr/bin/env
 
-cp $HOME/.zshrc zshrc
+#cp $HOME/.zshrc zshrc
 cp ~/.vimrc vimrc
 cp ~/.p10k.zsh p10k.zsh
 cp ~/.xmonad/xmonad.hs xmonad.hs

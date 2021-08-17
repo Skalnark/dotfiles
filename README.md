@@ -1,3 +1,5 @@
+> Do not expect this repo to be organized in any particular way.
+
 ## Dependencias
 - [bspwm](https://wiki.archlinux.org/index.php/Bspwm)
   - [xwinfo](https://aur.archlinux.org/xwinfo-git)

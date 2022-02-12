@@ -6,12 +6,15 @@
 super + Return
 	kitty
 
+super + shift + Return
+        xterm
+
 super + alt + Return
         bspc rule -a \* -o state=floating rectangle=700x350+0+0 center=true && kitty
 
 # program launcher
 super + @space
-    /home/skalnark/.config/polybar/scripts/menu
+	/home/skalnark/.config/polybar/shapes/scripts/launcher.sh
 # make sxhkd reload its configuration files:
 super + Escape
 	pkill -USR1 -x sxhkd
@@ -22,7 +25,7 @@ super + Escape
 
 # quit/restart bspwm
 super + alt + {q,r}
-	bspc {quit,wm -r}
+	bspc {quit,wm -r} ; systemctl --user restart spotify-listener.service
 
 # close and kill
 #super + {_,shift + }w
@@ -32,8 +35,8 @@ super + shift + k
 super + shift + c
         bspc node -c
 # alternate between the tiled and monocle layout
-super + m
-	bspc desktop -l next
+#super + m
+#	bspc desktop -l next
 
 # send the newest marked node to the newest preselected node
 super + y
@@ -59,9 +62,15 @@ super + ctrl + {m,x,y,z}
 # focus/swap
 #
 
+# swap to the biggest local in current directory
+super + shift + m
+	bspc node -s biggest.local
+
 # focus the node in the given direction
 super + {Left, Down, Up, Right}
 	bspc node -f {west,south,north,east}
+super + {j, k, i, l}
+        bspc node -f {west,south,north,east}
 
 # focus the node for the given path jump
 super + {p,b,comma,period}
@@ -96,6 +105,8 @@ super + {_,shift + }{1-9,0}
 # preselect the direction
 super + ctrl + {Left,Down,Up,Right}
 	bspc node -p {west,south,north,east}
+super + ctrl + {j,k,i,l}
+	bspc node -p {west,south,north,east}
 
 # preselect the ratio
 super + ctrl + {1-9}
@@ -114,7 +125,7 @@ super + ctrl + shift + space
 #
 
 # expand a window by moving one of its side outward
-super + alt + {h,j,k,l}
+super + alt + {j,k,i,l}
 	bspc node -z {left -20 0,bottom 0 20,top 0 -20,right 20 0}
 
 # contract a window by moving one of its side inward
@@ -132,12 +143,11 @@ shift + Print
     scrot $HOME/'Pictures/Screenshots/%Y-%m-%d_%H%M%S-$wx$h_scrot.png'; \
     kitty ranger $HOME/'Pictures/Screenshots/'
 
-control + Print
-    sleep 0.2; \
-    scrot -s $HOME/'Pictures/Screenshots/%Y-%m-%d_%H%M%S-$wx$h_scrot.png'
+super + shift + s
+    sleep 0.2; scrot -s -o $HOME/'Pictures/Screenshots/Print.png' && xclip -selection clipboard -target image/png $HOME/'Pictures/Screenshots/Print.png'
 
 Print
-    scrot $HOME/'Pictures/Screenshots/%Y-%m-%d_%H%M%S-$wx$h_scrot.png'
+    scrot -o $HOME/'Pictures/Screenshots/Print.png' && xclip -selection clipboard -target image/png $HOME/'Pictures/Screenshots/Print.png'
 
 # File Manager
 ctrl + alt + f
@@ -160,11 +170,10 @@ super + alt + Up
 super + alt + Down
     amixer set Master 1%-
 
-# Screen Locker
-ctrl + alt + Delete
-    unclutter -idle 0 --timeout 1 | xterm /home/skalnark/go/bin/gomatrix | echo $(xtrlock && pkill xterm; pkill gomatrix)
-
+#powerMenu
 ctrl + shift + Delete
-    unclutter -iddle 0 --timeout 1 | xterm asciiquarium | echo $(xtrlock && pkill xterm; pkill asciiquarium)
+	/home/skalnark/.config/polybar/shapes/scripts/powermenu.sh
 
-
+#dolphin
+super + shift + p
+    dolphin

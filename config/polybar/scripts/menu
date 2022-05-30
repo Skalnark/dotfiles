@@ -42,7 +42,7 @@ rofi -no-lazy-grab -show drun \
 -line-padding 10 \
 -padding 20 \
 -width 30 \
--xoffset 1790 -yoffset -550 \
+-xoffset 960 -yoffset -540 \
 -location 7 \
 -columns 2 \
 -show-icons -icon-theme "icon-themes" \

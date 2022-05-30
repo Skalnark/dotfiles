@@ -14,7 +14,8 @@ super + alt + Return
 
 # program launcher
 super + @space
-	/home/skalnark/.config/polybar/shapes/scripts/launcher.sh
+	/usr/local/bin/launcher.sh
+
 # make sxhkd reload its configuration files:
 super + Escape
 	pkill -USR1 -x sxhkd
@@ -153,27 +154,24 @@ Print
 ctrl + alt + f
     kitty ranger $HOME
 
-# Microphone Volume
-ctrl + shift + Up
-    amixer set Capture 1%+
-
-ctrl + shift + Down
-    amixer set Capture 1%-
-
-super + ctrl + v
-    amixer set Capture 20%
-
 # Volume
-super + alt + Up
-    amixer set Master 1%+
+XF86Audio{Raise,Lower}Volume
+	amixer sset Master {1+,1-} unmute
 
-super + alt + Down
-    amixer set Master 1%-
+XF86AudioMute
+	amixer_mute.sh
 
-#powerMenu
+# Backlight
+XF86MonBrightness{Up,Down}
+        xbacklight {-inc,-dec} 3
+
+# PowerMenu
 ctrl + shift + Delete
-	/home/skalnark/.config/polybar/shapes/scripts/powermenu.sh
+	/home/skalnark/.config/polybar/scripts/powermenu.sh
 
+# touchpad toggle
+XF86TouchpadToggle
+	/usr/local/bin/touchpad_toggle.sh
 #dolphin
 super + shift + p
     dolphin

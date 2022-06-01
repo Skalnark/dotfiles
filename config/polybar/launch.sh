@@ -12,7 +12,8 @@ killall -q polybar
 while pgrep -u $UID -x polybar >/dev/null; do sleep 1; done
 
 # Launch the bar
-if [[ $HDMI1 == *connected* ]]; then
+
+if [[ $DUAL_MONITOR ]]; then
 	polybar -q main -c "$DIR"/config.ini &
 	polybar -q external -c "$DIR"/config.ini &
 else

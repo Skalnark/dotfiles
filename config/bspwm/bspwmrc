@@ -8,15 +8,15 @@ setxkbmap -model abnt2 -layout br &
 xcompmgr -n -C &
 xrdb $HOME.Xresources &
 xbindkeys --poll-rc &
-wmname LG3D 
+wmname LG3D &
+dual_monitor_bspwm.sh &
 
-if [ -x dual_monitor_bspwm.sh ]; then
-	dual_monitor_bspwm.sh
+if [[ $DUAL_MONITOR ]]; then
+	bspc monitor HDMI1 -d I II III IV V
+	bspc monitor eDP1 -d VI VII VIII IX X
+else
+	bspc monitor -d I II III IV V VI VII VIII IX X
 fi
-
-#bspc monitor -d I II III IV V VI VII VIII IX X
-bspc monitor HDMI1 -d I II III IV V
-bspc monitor eDP1 -d VI VII VIII IX X
 
 bspc config border_width 2
 bspc config window_gap 2

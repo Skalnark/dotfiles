@@ -167,7 +167,7 @@ XF86MonBrightness{Up,Down}
 
 # PowerMenu
 ctrl + shift + Delete
-	/home/skalnark/.config/polybar/scripts/powermenu.sh
+	/usr/local/bin/powermenu.sh
 
 # touchpad toggle
 XF86TouchpadToggle

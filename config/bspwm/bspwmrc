@@ -1,5 +1,4 @@
 #! /bin/sh
-$HOME/.config/polybar/launch.sh & 
 feh --bg-fill $HOME/Pictures/Wallpapers/wallpaper.jpg &
 sxhkd &
 polybar & 
@@ -11,11 +10,15 @@ xbindkeys --poll-rc &
 wmname LG3D &
 dual_monitor_bspwm.sh &
 
-if [[ $DUAL_MONITOR ]]; then
+monitorCount=$(bspc query -M | wc -l)
+
+if [[ "$monitorCount" -eq 1 ]]; then
+	bspc monitor -d I II III IV V VI VII VIII IX X
+	$HOME/.config/polybar/launch_single.sh & 
+else
 	bspc monitor HDMI1 -d I II III IV V
 	bspc monitor eDP1 -d VI VII VIII IX X
-else
-	bspc monitor -d I II III IV V VI VII VIII IX X
+	$HOME/.config/polybar/launch.sh & 
 fi
 
 bspc config border_width 2

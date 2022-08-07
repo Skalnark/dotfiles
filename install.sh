@@ -11,6 +11,6 @@ ttf-iosevka-nerd vim unzip atool xbindkeys xcompmgr xdg-utils \
 xf86-input-libinput xf86-video-intel xf86-video-vesa xkeyboard-config \
 xorg-font-util xorg-server xorg-setxkbmap xorg-xinit xorg-xinput \
 xorg-xprop xorg-xsetroot xterm zsh zsh-theme-powerlevel10k-git \
-postman-bin dbeaver youtube-dl discord ntfs-3g
+postman-bin dbeaver youtube-dl discord noto-fonts-emoji ttf-joypixels ntfs-3g
 
 sudo usermod -aG docker $USER

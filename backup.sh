@@ -14,3 +14,4 @@ cp -r ~/.config/polybar config
 cp -r ~/.config/xmobar config
 cp -r ~/.config/sxhkd config
 cp -r ~/.config/rofi config
+cp ~/.zshrc zshrc

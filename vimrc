@@ -16,3 +16,4 @@ call plug#end()
 
 hi Normal guibg=NONE ctermbg=NONE
 set visualbell
+set relativenumber

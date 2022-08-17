@@ -15,3 +15,4 @@ cp -r ~/.config/xmobar config
 cp -r ~/.config/sxhkd config
 cp -r ~/.config/rofi config
 cp ~/.zshrc zshrc
+cp ~/.newsboat/urls newsboat_urls

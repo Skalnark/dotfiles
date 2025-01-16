@@ -29,7 +29,7 @@ alias exit="exit 0"
 alias cls='printf "\033c"'
 
 alias usejava8='sudo archlinux-java set java-8-openjdk'
-alias usejava18='sudo archlinux-java set java-18-openjdk'
+alias usejava23='sudo archlinux-java set java-23-openjdk'
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
@@ -38,6 +38,8 @@ export PATH="$PATH:/usr/local/bin"
 export PATH="$PATH:/usr/local/bin/flutter/bin"
 export PATH="$PATH:/usr/local/bin/android-studio/bin"
 export PATH="$PATH:/usr/local/bin/VSCode-linux-x64/bin"
+export PATH="$PATH:$HOME/.config/scripts"
+export PATH="$PATH:/opt/gradle/gradle-6.0.1/bin"
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
@@ -52,3 +54,9 @@ export JAVA_HOME="/usr/lib/jvm/default"
 if [[ $(xrandr --query | grep 'HDMI1' | grep -w 'connected') != *disconnected* ]]; then
 	export DUAL_MONITOR="1"
 fi
+
+export GTK_THEME="Adwaita:dark"
+export GTK2_RC_FILES="/usr/share/themes/Adwaita-dark/gtk-2.0/gtkrc"
+export QT_STYLE_OVERRIDE="Adwaita-Dark"
+
+[ -f "/home/skalnark/.ghcup/env" ] && . "/home/skalnark/.ghcup/env" # ghcup-env

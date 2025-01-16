@@ -8,7 +8,7 @@ xcompmgr -n -C &
 xrdb $HOME.Xresources &
 xbindkeys --poll-rc &
 wmname LG3D &
-dual_monitor_bspwm.sh &
+#$HOME/.config/scripts/dual_monitor_bspwm.sh &
 
 monitorCount=$(bspc query -M | wc -l)
 

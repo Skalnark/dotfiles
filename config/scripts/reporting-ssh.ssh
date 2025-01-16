@@ -1,0 +1,3 @@
+#!/bin/sh
+
+ssh -i $HOME/Documents/rds-ssh-tunnel.pem ubuntu@rds-ssh-tunnel.orbee.io -L 5431:reporting.dbs.us-west-2.orbee.io:5432 -N

@@ -23,10 +23,24 @@ alias ls="ls --color=always"
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 export PATH="$PATH:$HOME/.config/scripts"
+export PATH="$PATH:/opt/flutter/bin"
 
 export GTK_THEME="Adwaita:dark"
 export GTK2_RC_FILES="/usr/share/themes/Adwaita-dark/gtk-2.0/gtkrc"
 export QT_STYLE_OVERRIDE="Adwaita-Dark"
+export XCURSOR_SIZE="14"
 
 # Unity CLI
 case ":${PATH}:" in *:"$HOME/.local/bin":*) ;; *) export PATH="$HOME/.local/bin:$PATH" ;; esac
+
+# Flutter
+export PATH="$PATH:/opt/flutter/bin"
+export CHROME_EXECUTABLE='/usr/bin/brave'
+export ANDROID_HOME='/usr/bin/sdk_android'
+export PATH="$PATH:$ANDROID_HOME/tools"
+export PATH="$PATH:$ANDROID_HOME/tools/bin"
+export PATH="$PATH:$ANDROID_HOME/platform-tools"
+
+
+# Wow economy
+export WOWPATH="$HOME/Games/battlenet/drive_c/Program Files (x86)/World of Warcraft/_retail_/"
